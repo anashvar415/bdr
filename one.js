@@ -152,11 +152,31 @@ function showResumeTemplate(data, template) {
     document.getElementById('t1Email').textContent = data.email;
     document.getElementById('t1Phone').textContent = data.phone;
     document.getElementById('t1Education').textContent = data.education;
-    document.getElementById('t1Skills').textContent = data.skills;
+    
     document.getElementById('t1Experience').textContent = data.experience;
-    document.getElementById('t1Projects').textContent = data.projects;
-    document.getElementById('t1Certifications').textContent = data.certifications;
-    document.getElementById('t1Hobbies').textContent = data.hobbies;
+   function renderList(id, items) {
+      const ul = document.getElementById(id);
+      ul.innerHTML = "";
+      items.forEach(item => {
+        if (item.trim()) {
+          const li = document.createElement("li");
+          li.textContent = item.trim();
+          ul.appendChild(li);
+        }
+      });
+    }
+
+  
+    const projectsArr = data.projects.split(/[\n,]+/);
+    const certificationsArr = data.certifications.split(/[\n,]+/);
+    const hobbiesArr = data.hobbies.split(/[\n,]+/);
+
+    renderList('t1Projects', projectsArr);
+    renderList('t1Certifications', certificationsArr);
+    renderList('t1Hobbies', hobbiesArr);
+    renderList('t1Skills', data.skills.split(/[\n,]+/));
+    renderList('t1Experience', data.experience.split(/[\n,]+/));
+
     document.getElementById('resumeTemplate1').style.display = 'block';
   } else {
     document.getElementById('resumeProfilePict2').src = profilePicDataUrl || "";
